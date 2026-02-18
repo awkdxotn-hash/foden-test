@@ -76,23 +76,35 @@ main {
     max-width: 600px;
 }
 
+#lotto-sets-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.lotto-set {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .lotto-numbers {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 2rem;
-    min-height: 80px;
+    flex-grow: 1;
 }
 
 .number-ball {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: white;
     box-shadow: 0 5px 15px var(--shadow-color);
@@ -120,6 +132,21 @@ main {
 #generate-btn:active {
     transform: translateY(0);
     box-shadow: 0 5px 15px var(--glow-color);
+}
+
+.copy-btn {
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
 }
 
 footer {
@@ -156,9 +183,14 @@ footer {
         padding: 2rem;
     }
 
+    .lotto-set {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
     .number-ball {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }

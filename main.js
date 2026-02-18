@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generate-btn');
-    const numbersContainer = document.querySelector('.lotto-numbers');
+    const setsContainer = document.getElementById('lotto-sets-container');
     const themeSwitch = document.getElementById('theme-switch');
     const body = document.body;
 
@@ -13,27 +13,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return Array.from(numbers).sort((a, b) => a - b);
     };
 
-    const displayNumbers = (numbers) => {
-        numbersContainer.innerHTML = ''; // Clear previous numbers
-        numbers.forEach((number, index) => {
-            const ball = document.createElement('div');
-            ball.classList.add('number-ball', `color-${(index % 6) + 1}`);
-            ball.textContent = number;
-            ball.style.animationDelay = `${index * 0.1}s`;
-            numbersContainer.appendChild(ball);
-        });
+    const generateAndDisplaySets = () => {
+        setsContainer.innerHTML = ''; // Clear previous sets
+        for (let i = 0; i < 5; i++) {
+            const lottoNumbers = generateUniqueNumbers();
+            const setElement = document.createElement('div');
+            setElement.classList.add('lotto-set');
+            setElement.style.animationDelay = `${i * 0.1}s`;
+
+            const numbersContainer = document.createElement('div');
+            numbersContainer.classList.add('lotto-numbers');
+
+            lottoNumbers.forEach((number, index) => {
+                const ball = document.createElement('div');
+                ball.classList.add('number-ball', `color-${(index % 6) + 1}`);
+                ball.textContent = number;
+                numbersContainer.appendChild(ball);
+            });
+
+            const copyBtn = document.createElement('button');
+            copyBtn.classList.add('copy-btn');
+            copyBtn.textContent = 'Copy';
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(lottoNumbers.join(', ')).then(() => {
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Copy';
+                    }, 1500);
+                });
+            });
+
+            setElement.appendChild(numbersContainer);
+            setElement.appendChild(copyBtn);
+            setsContainer.appendChild(setElement);
+        }
     };
 
-    generateBtn.addEventListener('click', () => {
-        const lottoNumbers = generateUniqueNumbers();
-        displayNumbers(lottoNumbers);
-    });
+    generateBtn.addEventListener('click', generateAndDisplaySets);
 
     themeSwitch.addEventListener('change', () => {
         body.classList.toggle('light-mode');
     });
 
     // Initial generation
-    const initialNumbers = generateUniqueNumbers();
-    displayNumbers(initialNumbers);
+    generateAndDisplaySets();
 });
